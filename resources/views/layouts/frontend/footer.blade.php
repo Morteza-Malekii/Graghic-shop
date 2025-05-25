@@ -73,7 +73,7 @@
                 </h4>
 
                 <p class="mtext-106 cl7" style="line-height: 40px">
-                    بدلیل شرایط حساس کنونی و شیوع کرونا تیم سون لرن تا اطلاع ثانوی به صورت دورکار فعالیت دارد.
+                    morteza167@gmail.com
                 </p>
 
                 <div class="p-t-27">
