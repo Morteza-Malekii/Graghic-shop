@@ -87,6 +87,7 @@
                         <i class="zmdi zmdi-search"></i>
                     </div>
 
+                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="{{ count(json_decode(Cookie::get('basket'), true)) }}">
                         <i class="zmdi zmdi-shopping-cart"></i>
                     </div>
                 </div>
@@ -144,6 +145,12 @@
                 <img src="/images/icons/icon-close2.png" alt="CLOSE">
             </button>
 
+            <form class="wrap-search-header flex-w p-l-15" action="{{ route('home.products.all') }}">
+                <button class="flex-c-m trans-04">
+                    <i class="zmdi zmdi-search"></i>
+                </button>
+                <input class="plh3" type="text" name="search" placeholder="متن خود را اینجا بنویسید ...">
+            </form>
         </div>
     </div>
 </header>
@@ -165,14 +172,34 @@
 
         <div class="header-cart-content flex-w js-pscroll">
             <ul class="header-cart-wrapitem w-full">
-                
+                @foreach (json_decode(Cookie::get('basket'), true) as $id => $value)
+                <li class="header-cart-item flex-w flex-t m-b-12">
+                    <a href="{{ route('home.basket.remove', $id) }}">
+                        <div class="header-cart-item-img">
+                            <img src="/{{ $value['demo_url'] }}" alt="IMG">
+                        </div>
+                    </a>
+
+                    <div class="header-cart-item-txt p-t-8">
+                        <a href="single.php" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                            {{ $value['title'] }}
+                        </a>
+
+                        <span class="header-cart-item-info">
+								{{ $value['price'] }} هزار تومان
+							</span>
+                    </div>
+                </li>
+                @endforeach
             </ul>
 
             <div class="w-full">
                 <div class="header-cart-total w-full p-tb-40">
+                    جمع کل: {{ array_sum(array_column(json_decode(Cookie::get('basket'), true), 'price')) }} هزار تومان
                 </div>
 
                 <div class="header-cart-buttons flex-w w-full">
+                    <a href="{{ route('home.checkout') }}" class="flex-c-m stext-101 cl0 size-107 w-100 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-l-8 m-b-10">
                         مشاهده سبد خرید و پرداخت
                     </a>
                 </div>

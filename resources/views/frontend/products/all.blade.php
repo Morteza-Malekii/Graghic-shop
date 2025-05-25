@@ -1,5 +1,5 @@
-@extends('layouts.frontend.master');
-
+@extends('layouts.frontend.master')
+ 
 @section('content')
  <!-- Product -->
  <div class="bg0 m-t-23 p-b-140">
@@ -232,5 +232,6 @@
         </div>
     </div>
 </div>
+
 
 @endsection
