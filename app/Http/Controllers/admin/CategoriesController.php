@@ -26,4 +26,10 @@ class CategoriesController extends Controller
             return back()->with('failed','category is not created !');
         return back()->with('success','category is create succcessfully!');
     }
+
+    public function all()
+    {
+        $categories = Category::all();
+        return view('admin.categories.all',compact('categories'));
+    }
 }
