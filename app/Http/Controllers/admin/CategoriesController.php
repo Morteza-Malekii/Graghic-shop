@@ -5,9 +5,11 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Categories\StoreCategory;
 use App\Http\Requests\Admin\Categories\StoreRequest;
+use App\Http\Requests\Admin\categories\UpdateRequest;
 use App\Models\Category;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\Return_;
 
 class CategoriesController extends Controller
 {
@@ -17,14 +19,10 @@ class CategoriesController extends Controller
 
     public function store(StoreRequest $request)
     {
-        // $storeRequest = $request->validate();
-        $categoryStore = Category::create([
-            'title'=>$request->title,
-            'slug'=>$request->slug
-        ]);
-        if (!$categoryStore)
-            return back()->with('failed','category is not created !');
-        return back()->with('success','category is create succcessfully!');
+        $category = Category::create($request->validated());
+        if (!$category)
+            return back()->with('failed','category was not created!');
+        return back()->with('success','category created succcessfully!');
     }
 
     public function all()
@@ -32,4 +30,23 @@ class CategoriesController extends Controller
         $categories = Category::paginate(5);
         return view('admin.categories.all',compact('categories'));
     }
+
+    public function delete(Category $category)
+    {
+        $category->delete();
+        return back()->with('success','category was deleted.');
+    }
+
+    public function edit(Category $category)
+    {
+        return view('admin.categories.edit',compact('category'));
+    }
+
+    public function update(UpdateRequest $request ,Category $category)
+    {
+        if(!$category->update($request->validated()))
+            return back()->with('failed', 'category was not updated');
+        return back()->with('success', 'category updated successfully');
+    }
+    
 }

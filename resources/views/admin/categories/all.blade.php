@@ -58,8 +58,8 @@
                                 <td>{{ $category->title }}</td>
                                 <td>{{ $category->created_at }}</td>
                                 <td>
-                                    <a href="" class="btn btn-default btn-icons"><i class="fa fa-edit"></i></a>
-                                    <form action="" method="POST" style="display: inline">
+                                    <a href="{{ route('admin.categories.edit' , $category) }}" class="btn btn-default btn-icons"><i class="fa fa-edit"></i></a>
+                                    <form action="{{ route('admin.categories.delete' , $category) }}" method="POST" style="display: inline">
                                       @csrf
                                       @method('delete')
                                       <button class="btn btn-default btn-icons" type="submit"><i class="fa fa-trash"></i></button>
