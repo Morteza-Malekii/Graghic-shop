@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\products\StoreRequest;
+use App\Http\Requests\admin\products\UpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
@@ -98,7 +99,6 @@ class ProductsController extends Controller
 
     public function destroy(Product $product)
     {
-
     // همه چیز را در یک تراکنش انجام می‌دهیم
     DB::transaction(function () use ($product) {
         // حذف کامل پوشه‌ی محصولات برای فایل‌های عمومی
@@ -110,10 +110,55 @@ class ProductsController extends Controller
         // حذف رکورد محصول از دیتابیس
         $product->delete();
     });
-
     return redirect()
         ->route('admin.products.all')
         ->with('success', 'محصول و تمام فایل‌ها و پوشه‌های مرتبط حذف شدند.');
+    }
+
+    public function edit(Product $product )
+    {
+        $categories = Category::all();
+        return view('admin.products.edit', compact('product','categories'));
+    }
+
+    public function update(UpdateRequest $request , Product $product)
+    {
+        $data = collect($request->validated())
+                    ->except(['thumbnail_url','demo_url','source_url'])
+                    ->toArray();
+
+        DB::transaction(function () use($data , $product , $request) {
+            $product->update($data);
+
+            $filefields = [
+                'thumbnail_url'=>'public_storage',
+                'demo_url'=>'public_storage',
+                'source_url'=>'local_storage'
+            ];
+
+            $paths = [];
+            foreach ($filefields as $field => $disk_name)
+            {
+                if ($request->hasFile($field))
+                {
+                    $oldRelativePath = $product->$field;
+                    $oldDiskPath = Storage::disk($disk_name);
+                    if($oldRelativePath && $oldDiskPath->exists($oldRelativePath))
+                    {
+                        $oldDiskPath->delete($oldRelativePath);
+                    }
+                    $file = $request->file($field);
+                    $fileName = $field . '_'. Str::random(8) .'.'. $file->getClientOriginalExtension();
+                    $newRelativePath = $file->storeAs("products/{$product->id}",$fileName , $disk_name);
+                    $paths[$field] = $newRelativePath;
+                }
+            }
+            if (!empty($paths))
+                {
+                    $product->update($paths);
+                }
+            });
+        return back()->with('success','product update successfulley !');
     }
 }
 
