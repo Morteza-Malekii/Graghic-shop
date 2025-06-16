@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Categories\StoreCategory;
@@ -13,6 +13,12 @@ use PhpParser\Node\Stmt\Return_;
 
 class CategoriesController extends Controller
 {
+    public function index()
+    {
+        $categories = Category::paginate(5);
+        return view('admin.categories.index',compact('categories'));
+    }
+
     public function create(){
         return view('admin.categories.create');
     }
@@ -25,11 +31,7 @@ class CategoriesController extends Controller
         return back()->with('success','category created succcessfully!');
     }
 
-    public function all()
-    {
-        $categories = Category::paginate(5);
-        return view('admin.categories.all',compact('categories'));
-    }
+
 
     public function delete(Category $category)
     {
@@ -48,5 +50,5 @@ class CategoriesController extends Controller
             return back()->with('failed', 'category was not updated');
         return back()->with('success', 'category updated successfully');
     }
-    
+
 }

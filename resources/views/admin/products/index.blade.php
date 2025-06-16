@@ -76,7 +76,7 @@
                                 <td>{{ $product->created_at }}</td>
                                 <td>
                                     <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-default btn-icons"><i class="fa fa-edit"></i></a>
-                                    <form action="{{ route('admin.products.delete', $product) }}" method="post" style="display: inline">
+                                    <form action="{{ route('admin.products.destroy', $product) }}" method="post" style="display: inline">
                                       @csrf
                                       @method('delete')
                                       <button href="" class="btn btn-default btn-icons"><i class="fa fa-trash"></i></button>

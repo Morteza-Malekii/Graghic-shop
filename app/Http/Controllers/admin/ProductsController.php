@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\products\StoreRequest;
@@ -15,11 +15,11 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ProductsController extends Controller
 {
-    public function all()
+    public function index()
     {
         $products = Product::paginate(5);
 
-        return view('admin.products.all', compact('products'));
+        return view('admin.products.index', compact('products'));
     }
     public function create()
     {
@@ -29,15 +29,15 @@ class ProductsController extends Controller
 
     public function store(StoreRequest $request)
     {
-        $validated = $request->validated();
+        $data = $request->validated();
 
         // ۱. ایجاد رکورد محصول
         $admin = User::where('email', 'morteza167@gmail.com')->first();
         $product = Product::create([
-            'title'       => $validated['title'],
-            'description' => $validated['description'],
-            'price'       => $validated['price'],
-            'category_id' => $validated['category_id'],
+            'title'       => $data['title'],
+            'description' => $data['description'],
+            'price'       => $data['price'],
+            'category_id' => $data['category_id'],
             'owner_id'    => $admin->id,
         ]);
 
@@ -83,9 +83,9 @@ class ProductsController extends Controller
         $disk = Storage::disk('public_storage');
         if (! $disk->exists($relativePath)) {
         return redirect()
-            ->route('admin.products.all')
+            ->route('admin.products.index')
             ->with('failed', 'فایل دمو یافت نشد.');
-    }
+        }
         return $disk->download($relativePath,$demoName);
     }
 
@@ -99,20 +99,20 @@ class ProductsController extends Controller
 
     public function destroy(Product $product)
     {
-    // همه چیز را در یک تراکنش انجام می‌دهیم
-    DB::transaction(function () use ($product) {
-        // حذف کامل پوشه‌ی محصولات برای فایل‌های عمومی
-        Storage::disk('public_storage')->deleteDirectory("products/{$product->id}");
+        // همه چیز را در یک تراکنش انجام می‌دهیم
+        DB::transaction(function () use ($product) {
+            // حذف کامل پوشه‌ی محصولات برای فایل‌های عمومی
+            Storage::disk('public_storage')->deleteDirectory("products/{$product->id}");
 
-        // حذف پوشه‌ی محصولات برای فایل‌های خصوصی
-        Storage::disk('local_storage')->deleteDirectory("products/{$product->id}");
+            // حذف پوشه‌ی محصولات برای فایل‌های خصوصی
+            Storage::disk('local_storage')->deleteDirectory("products/{$product->id}");
 
-        // حذف رکورد محصول از دیتابیس
-        $product->delete();
-    });
-    return redirect()
-        ->route('admin.products.all')
-        ->with('success', 'محصول و تمام فایل‌ها و پوشه‌های مرتبط حذف شدند.');
+            // حذف رکورد محصول از دیتابیس
+            $product->delete();
+        });
+        return redirect()
+            ->route('admin.products.index')
+            ->with('success', 'محصول و تمام فایل‌ها و پوشه‌های مرتبط حذف شدند.');
     }
 
     public function edit(Product $product )

@@ -1,5 +1,6 @@
 @extends('layouts.admin.master')
 
+
 @section('content')
 
   <!-- Content Wrapper. Contains page content -->
@@ -11,8 +12,8 @@
           <div class="col-12">
             <h1 class="m-0 text-dark">
                 <a class="nav-link drawer" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
-                محصولات / افزودن
-                <a class="btn btn-primary float-left text-white py-2 px-4" href="{{ route('admin.products.index') }}">بازگشت به صفحه محصولات</a>
+                کاربران / افزودن
+                <a class="btn btn-primary float-left text-white py-2 px-4" href="{{ route('admin.users.index') }}">بازگشت به صفحه کاربران</a>
             </h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -28,58 +29,55 @@
               <div class="col-md-12">
                   <div class="card card-defualt">
                       <!-- form start -->
-                      <form action="{{ route('admin.products.store') }}" method="post" enctype="multipart/form-data">
+                      <form action="{{ route('admin.users.store') }}" method="post">
                         @csrf
                           <div class="card-body">
                               <div class="row">
                                   <div class="col-md-6">
                                       <div class="form-group">
-                                          <label>عنوان</label>
-                                          <input type="text" class="form-control" name="title" placeholder="نامک را وارد کنید">
+                                          <label>نام و نام خانوادگی</label>
+                                          <input type="text" class="form-control" name="name" placeholder="نام و نام خانوادگی را وارد کنید">
                                       </div>
                                   </div>
-                                  <div class="col-md-3">
+                                  <div class="col-md-6">
                                       <div class="form-group">
-                                          <label>دسته بندی</label>
-                                          <select class="form-control" name="category_id">
-                                             @foreach ($categories as $category)
-                                              <option value="{{ $category->id }}">{{ $category->title }}</option>
-                                              @endforeach
+                                          <label>ایمیل</label>
+                                          <input type="email" class="form-control" name="email" placeholder="ایمیل را وارد کنید">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label>موبایل</label>
+                                          <input type="text" class="form-control" name="mobile" placeholder="موبایل را وارد کنید">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label>پسورد</label>
+                                          <input type="password" class="form-control" name="password" placeholder="پسورد را وارد کنید">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label>تایید پسورد</label>
+                                          <input type="password" class="form-control" name="password_confirmation" placeholder="پسورد را دوباره وارد کنید">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label>نقش کاربری</label>
+                                          <select class="form-control" name="role">
+                                              <option value="user">کاربر عادی</option>
+                                              {{-- <option value="2">طراح و فروشنده</option> --}}
+                                              <option value="admin">مدیر</option>
                                           </select>
                                       </div>
                                   </div>
-                                  <div class="col-md-3">
-                                      <div class="form-group">
-                                          <label>قیمت</label>
-                                          <input type="text" class="form-control" name="price" placeholder="قیمت را وارد کنید">
-                                      </div>
-                                  </div>
                               </div>
-                              <div class="row">
-                                  <div class="col-md-4">
-                                      <div class="form-group">
-                                          <label>تصویر شاخص</label>
-                                          <input class="form-control" type="file" name="thumbnail_url">
-                                      </div>
-                                  </div>
-                                  <div class="col-md-4">
-                                      <div class="form-group">
-                                          <label>تصویر محصول</label>
-                                          <input class="form-control" type="file" name="demo_url">
-                                      </div>
-                                  </div>
-                                  <div class="col-md-4">
-                                      <div class="form-group">
-                                          <label>سورس اصلی محصول</label>
-                                          <input class="form-control" type="file" name="source_url">
-                                      </div>
-                                  </div>
 
-                              </div>
-                              <div class="form-group">
-                                  <label>توضیحات</label>
-                                  <textarea name="description" id="editor">لطفا متن مورد نظر خودتان را وارد کنید</textarea>
-                              </div>
+
+
+
                           </div>
                           <!-- /.card-body -->
 
