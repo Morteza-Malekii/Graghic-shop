@@ -9,7 +9,7 @@ class Category extends Model
     //public $fillable = ['title','slug'];
     public $guarded = [];
 
-    public function products()
+    public function product()
     {
         return $this->hasMany(Product::class);
     }

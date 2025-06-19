@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\admin\OrdersController;
+use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\UsersController;
 use GuzzleHttp\Promise\Create;
@@ -47,4 +49,13 @@ Route::prefix('admin')->group(function(){
          Route::get('{user}/edit',[UsersController::class, 'edit'])->name('admin.users.edit');
          Route::put('{user}/update',[UsersController::class, 'update'])->name('admin.users.update');
     });
+
+    Route::prefix('orders')->group(function(){
+        Route::get('', [OrdersController::class, 'index'])->name('admin.orders.index');
+    });
+
+    Route::prefix('payments')->group(function(){
+        Route::get('', [PaymentController::class, 'index'])->name('admin.payments.index');
+    });
+
 });
