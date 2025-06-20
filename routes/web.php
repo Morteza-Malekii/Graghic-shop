@@ -5,13 +5,15 @@ use App\Http\Controllers\admin\OrdersController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Home\ProductsController as HomeProductsController;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Support\Facades\Route;
 
-
-Route::get('products/all', function(){
-    return view('frontend.products.all');
+Route::prefix('')->group(function(){
+    Route::get('',[HomeProductsController::class,'index'])->name('home.products.index');
+    Route::get('{product}/show',[HomeProductsController::class,'show'])->name('home.products.show');
 });
+
 Route::get('test', function(){
     return view('test');
 });

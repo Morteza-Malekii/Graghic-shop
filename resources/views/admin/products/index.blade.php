@@ -58,32 +58,32 @@
                               </tr>
 
                               @foreach ($products as $product)
-                              <tr>
-                                <td>{{ $product->id }}</td>
-                                <td>
-                                    <img src="{{ Storage::url($product->thumbnail_url) }}" class="product_img">
-                                    {{ $product->title }}</td>
-                                <td>{{ $product->category->title}}</td>
-                                <td>{{ $product->owner->name }}</td>
-                                <td>{!! Str::limit($product->description, 12) !!}</td>
-                                <td>
-                                    <a href="{{ route('admin.products.download.demo', $product) }}" class="btn btn-default btn-icons" title="لینک دمو"><i class="fa fa-link"></i></a>
-                                </td>
-                                <td>
-                                    <a href="{{ route('admin.products.download.source', $product) }}" class="btn btn-default btn-icons" title="لینک دانلود"><i class="fa fa-link"></i></a>
-                                </td>
-                                <td>{{ $product->price }} تومان</td>
-                                <td>{{ $product->created_at }}</td>
-                                <td>
-                                    <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-default btn-icons"><i class="fa fa-edit"></i></a>
-                                    <form action="{{ route('admin.products.destroy', $product) }}" method="post" style="display: inline">
-                                      @csrf
-                                      @method('delete')
-                                      <button href="" class="btn btn-default btn-icons"><i class="fa fa-trash"></i></button>
-                                    </form>
+                                    <tr>
+                                        <td>{{ $product->id }}</td>
+                                        <td>
+                                            <img src="{{ Storage::url($product->thumbnail_url) }}" class="product_img">
+                                            {{ $product->title }}</td>
+                                        <td>{{ $product->category->title}}</td>
+                                        <td>{{ $product->owner->name }}</td>
+                                        <td>{!! Str::limit($product->description, 12) !!}</td>
+                                        <td>
+                                            <a href="{{ route('admin.products.download.demo', $product) }}" class="btn btn-default btn-icons" title="لینک دمو"><i class="fa fa-link"></i></a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('admin.products.download.source', $product) }}" class="btn btn-default btn-icons" title="لینک دانلود"><i class="fa fa-link"></i></a>
+                                        </td>
+                                        <td>{{ $product->price }} تومان</td>
+                                        <td>{{ $product->created_at }}</td>
+                                        <td>
+                                            <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-default btn-icons"><i class="fa fa-edit"></i></a>
+                                            <form action="{{ route('admin.products.destroy', $product) }}" method="post" style="display: inline">
+                                            @csrf
+                                            @method('delete')
+                                            <button href="" class="btn btn-default btn-icons"><i class="fa fa-trash"></i></button>
+                                            </form>
 
-                                </td>
-                            </tr>
+                                        </td>
+                                    </tr>
                               @endforeach
 
                               </tbody></table>

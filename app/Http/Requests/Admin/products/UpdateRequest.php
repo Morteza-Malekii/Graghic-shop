@@ -25,9 +25,9 @@ class UpdateRequest extends FormRequest
             'title'=> 'required|min:3|max:128',
             'category_id'=> 'required|exists:categories,id',
             'price'=> 'required|numeric',
-            'thumbnail_url'=> 'nullable|image|mimes:png,jpg,jpeg',
-            'demo_url'=> 'nullable|image|mimes:png,jpg,jpeg',
-            'source_url'=> 'nullable|image|mimes:png,jpg,jpeg',
+            'thumbnail_url'=> 'nullable|image|mimes:jpeg,jpg,png,gif,svg,bmp,webp,ico,tiff',
+            'demo_url'=> 'nullable|image|mimes:jpeg,jpg,png,gif,svg,bmp,webp,ico,tiff',
+            'source_url'=> 'nullable|image|mimes:jpeg,jpg,png,gif,svg,bmp,webp,ico,tiff',
             'description'=> 'required|min:10',
         ];
     }
