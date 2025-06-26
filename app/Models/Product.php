@@ -17,4 +17,9 @@ class Product extends Model
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
+
+    public function scopeFilter($query, \App\Filters\QueryFilter $filters)
+    {
+        return $filters->apply($query);
+    }
 }

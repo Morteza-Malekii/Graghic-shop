@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Home;
 
+use App\Filters\ProductFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Products\StoreRequest;
 use App\Models\Category;
@@ -10,10 +11,15 @@ use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $filter     = new ProductFilter($request);
+        $products   = Product::query()
+                         ->filter($filter)
+                         ->paginate(12)
+                         ->withQueryString();
+
         $categories = Category::all();
-        $products = Product::all();
         return view('frontend.products.all', compact('categories','products'));
     }
 
