@@ -15,7 +15,7 @@ class ProductsController extends Controller
     {
         $filter     = new ProductFilter($request);
         $products   = Product::query()
-                         ->filter($filter)
+                         ->filter($filter)// این‌جا لاراول خودِ Product::scopeFilter  را صدا می‌زند که در داخل مدل نوشته شده
                          ->paginate(12)
                          ->withQueryString();
 

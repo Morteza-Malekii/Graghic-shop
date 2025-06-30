@@ -205,6 +205,42 @@
 </script>
 <!--===============================================================================================-->
 <script src="/js/main.js"></script>
+<!--===============================================================================================-->
+<script>
+  document.querySelectorAll('.js-show-modal1').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id    = btn.dataset.id;
+      const thumb = btn.dataset.thumb;
+      const demo  = btn.dataset.demo;
+      const title = btn.dataset.title;
+      const price = btn.dataset.price;
+      const desc  = btn.dataset.desc;
 
+      const modal = document.querySelector('.wrap-modal1');
+      modal.querySelector('.slick3 .item-slick3' )
+           .setAttribute('data-thumb', thumb);
+      modal.querySelector('.slick3 .item-slick3 img')
+           .setAttribute('src', demo);
+      modal.querySelector('.js-name-detail')
+           .textContent = title;
+      modal.querySelector('.mtext-106.cl2')
+           .textContent = price;
+      modal.querySelector('.stext-102.cl3')
+           .innerHTML = desc;
+
+     const form = modal.querySelector('#add-to-cart-form');
+     const tpl  = form.dataset.urlTemplate;
+     form.action = tpl.replace('__ID__', id);
+
+
+      modal.classList.add('show-modal1');
+    });
+  });
+  document.querySelectorAll('.js-hide-modal1').forEach(x =>
+    x.addEventListener('click', () =>
+      document.querySelector('.wrap-modal1').classList.remove('show-modal1')
+    )
+  );
+</script>
 </body>
 </html>

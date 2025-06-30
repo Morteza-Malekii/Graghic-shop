@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+@inject('cart', 'App\Services\CartService')
 <head>
     <title>GRAPHIC SHOP</title>
     <meta charset="UTF-8">
@@ -87,7 +88,7 @@
                         <i class="zmdi zmdi-search"></i>
                     </div>
 
-                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify={{-- "{{ count(json_decode(Cookie::get('basket'), true)) }} " --}}>
+                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify={{ $cart->count() }}>
                         <i class="zmdi zmdi-shopping-cart"></i>
                     </div>
                 </div>
@@ -155,53 +156,64 @@
     </div>
 </header>
 
-<!-- Cart -->
+<!-- Cart Modal -->
 <div class="wrap-header-cart js-panel-cart">
     <div class="s-full js-hide-cart"></div>
 
     <div class="header-cart flex-col-l p-l-65 p-r-25">
+        {{-- عنوان و دکمه بستن --}}
         <div class="header-cart-title flex-w flex-sb-m p-b-8">
-				<span class="mtext-103 cl2">
-					سبد خرید
-				</span>
-
+            <span class="mtext-103 cl2">
+                سبد خرید ({{ $cart->all()->count() }} آیتم)
+            </span>
             <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
                 <i class="zmdi zmdi-close"></i>
             </div>
         </div>
 
         <div class="header-cart-content flex-w js-pscroll">
+            {{-- لیست آیتم‌ها --}}
             <ul class="header-cart-wrapitem w-full">
-                {{--
-                @foreach (json_decode(Cookie::get('basket'), true) as $id => $value)
-                <li class="header-cart-item flex-w flex-t m-b-12">
-                    <a href="{{ route('home.basket.remove', $id) }}">
-                        <div class="header-cart-item-img">
-                            <img src="/{{ $value['demo_url'] }}" alt="IMG">
+                @forelse($cart->all() as $productId => $item)
+                    <li class="header-cart-item flex-w flex-t m-b-12">
+                        {{-- فرم حذف با متد DELETE --}}
+                        <form action="{{ route('cart.remove', $productId) }}"
+                              method="POST"
+                              style="display:inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="header-cart-item-img btn-reset">
+                                <img src="{{ Storage::url($item['product']['thumbnail_url']) }}"
+                                     alt="{{ $item['product']['title'] }}">
+                            </button>
+                        </form>
+
+                        {{-- عنوان و قیمت و تعداد --}}
+                        <div class="header-cart-item-txt p-t-8">
+                            <a href="{{ route('home.products.show', $productId) }}"
+                               class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                                {{ $item['product']['title'] }}
+                            </a>
+                            <span class="header-cart-item-info">
+                                {{ $item['quantity'] }} × {{ number_format($item['product']['price']) }} تومان
+                            </span>
                         </div>
-                    </a>
-
-                    <div class="header-cart-item-txt p-t-8">
-                        <a href="single.php" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                            {{ $value['title'] }}
-                        </a>
-
-                        <span class="header-cart-item-info">
-								{{ $value['price'] }} هزار تومان
-							</span>
-                    </div>
-                </li>
-                @endforeach
-                --}}
+                    </li>
+                @empty
+                    <li class="header-cart-item flex-w flex-t m-b-12 text-center">
+                        سبد خرید شما خالی است.
+                    </li>
+                @endforelse
             </ul>
 
+            {{-- جمع کل و دکمه مشاهده جزئیات سبد --}}
             <div class="w-full">
                 <div class="header-cart-total w-full p-tb-40">
-             {{--       جمع کل: {{ array_sum(array_column(json_decode(Cookie::get('basket'), true), 'price')) }} هزار تومان --}}
+                    مجموع: {{ number_format($cart->total()) }} تومان
                 </div>
-
                 <div class="header-cart-buttons flex-w w-full">
-                    <a href={{-- "{{ route('home.checkout') }}" --}} class="flex-c-m stext-101 cl0 size-107 w-100 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-l-8 m-b-10">
+                    <a href="{{ route('cart.index') }}"
+                       class="flex-c-m stext-101 cl0 size-107 w-100 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-l-8 m-b-10">
                         مشاهده سبد خرید و پرداخت
                     </a>
                 </div>

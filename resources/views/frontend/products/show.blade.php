@@ -2,7 +2,6 @@
 
 
 @section('content')
-
     <!-- breadcrumb -->
     <div class="container">
         <div class="bread-crumb flex-w p-t-30">
@@ -17,8 +16,8 @@
             </a>
 
             <span class="mtext-106 cl4">
-				کارت ویزیت مشاور املاک
-			</span>
+                کارت ویزیت مشاور املاک
+            </span>
         </div>
     </div>
 
@@ -38,31 +37,13 @@
                                     <div class="wrap-pic-w pos-relative">
                                         <img src="{{ Storage::url($product->demo_url) }}" alt="IMG-PRODUCT">
 
-                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{ Storage::url($product->demo_url) }}">
+                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
+                                            href="{{ Storage::url($product->demo_url) }}">
                                             <i class="fa fa-expand"></i>
                                         </a>
                                     </div>
                                 </div>
 
-                                {{-- <div class="item-slick3" data-thumb="images/product-detail-02.jpg">
-                                    <div class="wrap-pic-w pos-relative">
-                                        <img src="images/product-detail-02.jpg" alt="IMG-PRODUCT">
-
-                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-02.jpg">
-                                            <i class="fa fa-expand"></i>
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div class="item-slick3" data-thumb="images/product-detail-03.jpg">
-                                    <div class="wrap-pic-w pos-relative">
-                                        <img src="images/product-detail-03.jpg" alt="IMG-PRODUCT">
-
-                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-03.jpg">
-                                            <i class="fa fa-expand"></i>
-                                        </a>
-                                    </div>
-                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -75,8 +56,8 @@
                         </h4>
 
                         <span class="mtext-106 cl2">
-							 {{ $product->price }} هزار تومان
-						</span>
+                            {{ $product->price }} هزار تومان
+                        </span>
 
                         <p class="stext-102 cl3 p-t-23">
                             {!! $product->description !!}
@@ -87,7 +68,13 @@
 
                             <div class="flex-w flex-r-m p-b-10">
                                 <div class="flex-w flex-m respon6-next">
-                                    <a href=""  class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">  افزودن به سبد خرید</a>
+
+                                    <form action="{{ route('cart.add', $product) }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button class="btn btn-primary">افزودن به سبد</button>
+                                    </form>
+
                                 </div>
                             </div>
                         </div>
@@ -126,23 +113,23 @@
                                 <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
                                     <ul class="p-lr-28 p-lr-15-sm">
                                         <li class="flex-w flex-t p-b-7">
-											<span class="mtext-106 cl3 size-205">
-												صاحب طرح
-											</span>
+                                            <span class="mtext-106 cl3 size-205">
+                                                صاحب طرح
+                                            </span>
 
                                             <span class="mtext-106 size-206">
-												{{ $product->owner->name }}
-											</span>
+                                                {{ $product->owner->name }}
+                                            </span>
                                         </li>
 
                                         <li class="flex-w flex-t p-b-7">
-											<span class="mtext-106 cl3 size-205">
-												تاریخ ایجاد
-											</span>
+                                            <span class="mtext-106 cl3 size-205">
+                                                تاریخ ایجاد
+                                            </span>
 
                                             <span class="mtext-106 cl6 size-206">
-												{{ $product->created_at }}
-											</span>
+                                                {{ $product->created_at }}
+                                            </span>
                                         </li>
                                     </ul>
                                 </div>
@@ -170,37 +157,37 @@
             <div class="wrap-slick2">
                 <div class="slick2">
 
-                     @foreach ($simillerProducts as $simillerProduct)
-                    <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                        <!-- Block2 -->
-                        <div class="block2">
-                            <div class="block2-pic hov-img0">
-                                <img src="{{ Storage::url($simillerProduct->demo_url) }}" alt="IMG-PRODUCT">
+                    @foreach ($simillerProducts as $simillerProduct)
+                        <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
+                            <!-- Block2 -->
+                            <div class="block2">
+                                <div class="block2-pic hov-img0">
+                                    <img src="{{ Storage::url($simillerProduct->demo_url) }}" alt="IMG-PRODUCT">
 
-                                <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                    مشاهده سریع
-                                </a>
-                            </div>
-
-                            <div class="block2-txt flex-w flex-t p-t-14">
-                                <div class="block2-txt-child1 flex-col-l ">
-                                    <a href="{{ route('home.products.show', $simillerProduct) }}" class="mtext-106 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                       {{ $simillerProduct->title }}
+                                    <a href="#"
+                                        class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                                        مشاهده سریع
                                     </a>
+                                </div>
 
-                                    <span class="stext-105 cl3">
-									{{ $simillerProduct->price }} هزار تومان
-								</span>
+                                <div class="block2-txt flex-w flex-t p-t-14">
+                                    <div class="block2-txt-child1 flex-col-l ">
+                                        <a href="{{ route('home.products.show', $simillerProduct) }}"
+                                            class="mtext-106 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                            {{ $simillerProduct->title }}
+                                        </a>
+
+                                        <span class="stext-105 cl3">
+                                            {{ $simillerProduct->price }} هزار تومان
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     @endforeach
 
                 </div>
             </div>
         </div>
     </section>
-
-
 @endsection
