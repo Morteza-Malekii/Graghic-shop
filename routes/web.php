@@ -26,6 +26,10 @@ Route::prefix('cart')->group(function () {
 
 });
 
+
+Route::post('payment',[PaymentController::class, 'payment'])->name('payment');
+Route::get('payment/verify',[PaymentController::class, 'verify'])->name('payment.verify');
+
 Route::prefix('admin')->group(function(){
     Route::prefix('categories')->group(function(){
         Route::get('',[CategoriesController::class ,'index'])->name('admin.categories.index');
