@@ -2,21 +2,16 @@
 
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\admin\OrdersController;
-use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Home\ProductsController as HomeProductsController;
-use GuzzleHttp\Promise\Create;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('')->group(function(){
     Route::get('',[HomeProductsController::class,'index'])->name('home.products.index');
     Route::get('{product}/show',[HomeProductsController::class,'show'])->name('home.products.show');
-});
-
-Route::get('test', function(){
-    return view('test');
 });
 
 Route::get('products/admin',function(){
@@ -28,6 +23,7 @@ Route::prefix('cart')->group(function () {
     Route::post('add/{product}', [CartController::class, 'add'])->name('cart.add');
     Route::delete('remove/{product}', [CartController::class, 'remove'])->name('cart.remove');
     Route::get('clear', [CartController::class, 'clear'])->name('cart.clear');
+
 });
 
 Route::prefix('admin')->group(function(){
