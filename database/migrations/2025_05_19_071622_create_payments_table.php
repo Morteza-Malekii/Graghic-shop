@@ -13,14 +13,13 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->enum('gateway',['idpay','zarinpal']);
-            $table->unsignedInteger('res_id');
-            $table->unsignedInteger('ref_id');
-            $table->enum('status',['paid','unpaid']);
-
-            $table->unsignedBigInteger('order_id');
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-
+            $table->foreignId('order_id')->constrained()->cascadeOnDelete();
+            $table->string('gateway',50);
+            $table->string('transaction_id',100);
+            $table->string('reference_id',100)->nullable();
+            $table->string('currency',3)->default('IRR');
+            $table->enum('status',['initiated', 'pending', 'paid', 'failed', 'refunded'])->default('initiated');
+            $table->json('payload')->nullable();
             $table->timestamps();
         });
     }

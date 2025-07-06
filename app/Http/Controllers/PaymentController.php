@@ -10,7 +10,7 @@ class PaymentController extends Controller
 {
     public function payment()
     {
-
+        echo 'ok';
     }
 
     public function verify()

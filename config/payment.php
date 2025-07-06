@@ -49,10 +49,10 @@ return [
             'zaringateApiVerificationUrl' => 'https://ir.zarinpal.com/pg/services/WebGate/wsdl',
 
             'mode' => 'sandbox', // can be normal, sandbox, zaringate
-            'merchantId' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'merchantId' => 'b3067e86-d9c4-436e-a00e-d0847dd34862',
             'callbackUrl' => 'http://yoursite.com/path/to',
             'description' => 'payment using zarinpal',
-            'currency' => 'T', //Can be R, T (Rial, Toman)
+            'currency' => 'R', //Can be R, T (Rial, Toman)
         ],
         'gooyapay' => [
             'apiPurchaseUrl' => 'https://gooyapay.ir/webservice/rest/PaymentRequest',
@@ -336,7 +336,6 @@ return [
             'callbackUrl' => 'http://yoursite.com/path/to',
             'description' => 'payment using yekpay',
         ],
-
         'zibal' => [
             /* normal api */
             'apiPurchaseUrl' => 'https://gateway.zibal.ir/v1/request',
