@@ -6,7 +6,9 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Home\ProductsController as HomeProductsController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('')->group(function(){
@@ -26,9 +28,16 @@ Route::prefix('cart')->group(function () {
 
 });
 
+Route::get('order/{order}/success', [OrderController::class, 'success'])
+     ->name('order.success');
+Route::get('order/{order}/failure', [OrderController::class, 'failure'])
+     ->name('order.failure');
 
-Route::post('payment',[PaymentController::class, 'payment'])->name('payment');
-Route::get('payment/verify',[PaymentController::class, 'verify'])->name('payment.verify');
+
+Route::post('checkout',[CheckoutController::class, 'checkout'])->name('checkout');
+Route::get('checkout/verify',[CheckoutController::class, 'verify'])->name('checkout.verify');
+Route::get('payment/callback/{payment}',[PaymentController::class, 'callback'])->name('payment.callback');
+
 
 Route::prefix('admin')->group(function(){
     Route::prefix('categories')->group(function(){

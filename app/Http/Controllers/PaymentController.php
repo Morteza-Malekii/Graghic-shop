@@ -1,21 +1,24 @@
 <?php
 
 namespace App\Http\Controllers;
-use Shetabit\Multipay\Payment;
-use Shetabit\Multipay\Invoice;
-use Shetabit\Multipay\Exceptions\InvalidPaymentException;
 
+use Illuminate\Http\Request;
+use App\Models\Payment;
+use App\Services\PaymentService;
 
 class PaymentController extends Controller
 {
-    public function payment()
+    protected PaymentService $paymentService;
+
+    public function __construct(PaymentService $paymentService)
     {
-        echo 'ok';
+        $this->paymentService = $paymentService;
     }
 
-    public function verify()
+    // دریافت callback از درگاه پرداخت
+    public function callback(Request $request, Payment $payment)
     {
 
+        return $this->paymentService->verify($request, $payment);
     }
-
 }

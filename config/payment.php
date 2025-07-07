@@ -10,7 +10,7 @@ return [
     | You can switch to a different driver at runtime.
     |
     */
-    'default' => 'zarinpal',
+
 
     /*
     |--------------------------------------------------------------------------
@@ -22,6 +22,7 @@ return [
     | it in the map array too.
     |
     */
+    'default' => env('PAYMENT_DRIVER', 'zarinpal'),
     'drivers' => [
         'local' => [
             'callbackUrl' => '/callback',
@@ -48,11 +49,12 @@ return [
             'zaringateApiPaymentUrl' => 'https://www.zarinpal.com/pg/StartPay/:authority/ZarinGate',
             'zaringateApiVerificationUrl' => 'https://ir.zarinpal.com/pg/services/WebGate/wsdl',
 
-            'mode' => 'sandbox', // can be normal, sandbox, zaringate
-            'merchantId' => 'b3067e86-d9c4-436e-a00e-d0847dd34862',
-            'callbackUrl' => 'http://yoursite.com/path/to',
+             // can be normal, sandbox, zaringate
+            'mode'       => env('ZARINPAL_MODE', 'sandbox'),
+            'merchantId' => env('ZARINPAL_TERMINAL_ID'),
+            'callbackUrl' => env('ZARINPAL_CALLBACK_URL', 'http://127.0.0.1:8001/payment/callback'),
             'description' => 'payment using zarinpal',
-            'currency' => 'R', //Can be R, T (Rial, Toman)
+            'currency' => 'T', //Can be R, T (Rial, Toman)
         ],
         'gooyapay' => [
             'apiPurchaseUrl' => 'https://gooyapay.ir/webservice/rest/PaymentRequest',

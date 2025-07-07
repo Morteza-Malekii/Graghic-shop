@@ -15,7 +15,7 @@
             </a>
         </div>
         {{-- فرم اطلاعات پرداخت و آیتم‌ها --}}
-        <form action="{{ route('payment') }}" method="POST" class="row">
+        <form action="{{ route('checkout') }}" method="POST" class="row">
           @csrf
 
           <div class="col-md-6">
@@ -23,19 +23,19 @@
 
             <div class="form-group mb-3">
               <label>نام و نام خانوادگی</label>
-              <input type="text" name="name" value="{{ old('name') }}" class="form-control" placeholder="نام و نام خانوادگی">
+              <input type="text" name="name" value="{{ old('name') }}" class="form-control" placeholder="نام و نام خانوادگی" required>
               @error('name') <small class="text-danger">{{ $message }}</small> @enderror
             </div>
 
             <div class="form-group mb-3">
               <label>موبایل</label>
-              <input type="text" name="mobile" value="{{ old('mobile') }}" class="form-control" placeholder="09xxxxxxxxx">
+              <input type="text" name="mobile" value="{{ old('mobile') }}" class="form-control" placeholder="09xxxxxxxxx" required>
               @error('mobile') <small class="text-danger">{{ $message }}</small> @enderror
             </div>
 
             <div class="form-group mb-4">
               <label>ایمیل</label>
-              <input type="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="example@mail.com">
+              <input type="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="example@mail.com" required>
               @error('email') <small class="text-danger">{{ $message }}</small> @enderror
             </div>
           </div>
