@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Order;
 use App\Models\Payment as PaymentModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Shetabit\Multipay\Invoice;
 use Shetabit\Payment\Facade\Payment;
 use Shetabit\Multipay\Exceptions\InvalidPaymentException;
@@ -65,7 +66,7 @@ class PaymentService
 
             // ۳. آپدیت وضعیت سفارش
             $payment->order->update(['status' => 'paid']);
-
+            Session::forget('cart');
             return redirect()->route('order.success', $payment->order);
 
         } catch (InvalidPaymentException $e) {
