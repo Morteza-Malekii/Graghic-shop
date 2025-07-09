@@ -22,4 +22,9 @@ class Product extends Model
     {
         return $filters->apply($query);
     }
+
+    public function order_item()
+    {
+         return $this->hasMany(Order_item::class);
+    }
 }

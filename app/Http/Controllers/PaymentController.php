@@ -15,7 +15,6 @@ class PaymentController extends Controller
         $this->paymentService = $paymentService;
     }
 
-    // دریافت callback از درگاه پرداخت
     public function callback(Request $request, Payment $payment)
     {
 

@@ -31,13 +31,11 @@ class CheckoutRequest extends FormRequest
         ];
     }
 
-
     public function messages(): array
     {
         return [
             'items.required'        => 'سبد خرید خالی است.',
             'items.*.quantity.min'  => 'تعداد آیتم‌ها باید حداقل ۱ باشد.',
-            // …
         ];
     }
 }

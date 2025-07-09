@@ -54,8 +54,6 @@ class ProductsController extends Controller
                 $file = $request->file($field);
                 $filename = "{$field}_" . Str::random(8) . "." . $file->getClientOriginalExtension();
                 $sourcePath = $file->storeAs("products/{$product->id}", $filename, 'public_storage');
-                // $file->move($publicFolder, $filename);
-
                 // مسیر نسبی برای دیتابیس
                 $paths[$field] = "products/{$product->id}/{$filename}";
             }

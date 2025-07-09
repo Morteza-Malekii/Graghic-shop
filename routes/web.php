@@ -9,6 +9,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Home\ProductsController as HomeProductsController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\DownloadController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('')->group(function(){
@@ -28,10 +29,9 @@ Route::prefix('cart')->group(function () {
 
 });
 
-Route::get('order/{order}/success', [OrderController::class, 'success'])
-     ->name('order.success');
-Route::get('order/{order}/failure', [OrderController::class, 'failure'])
-     ->name('order.failure');
+Route::get('order/{order}/success', [OrderController::class, 'success'])->name('order.success');
+Route::get('order/{order}/failure', [OrderController::class, 'failure'])->name('order.failure');
+Route::get('download/{path}', [DownloadController::class, 'file'])->where('path','.*')->name('download.file');
 
 
 Route::post('checkout',[CheckoutController::class, 'checkout'])->name('checkout');
