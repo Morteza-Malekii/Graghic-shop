@@ -21,8 +21,6 @@ class OrderController extends Controller
         return view('order.success', compact('order','links'));
     }
 
-
-    // نمایش صفحه پرداخت ناموفق
     public function failure(Order $order)
     {
         return view('order.failure', compact('order'));

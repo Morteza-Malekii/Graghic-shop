@@ -1,14 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
-// use Shetabit\Multipay\Invoice;
-// use Shetabit\Payment\Facade\Payment;
-// use Shetabit\Multipay\Exceptions\InvalidPaymentException;
-
 use App\Http\Requests\CheckoutRequest;
 use App\Services\CheckoutService;
-
-
 
 class CheckoutController extends Controller
 {
@@ -26,5 +20,4 @@ class CheckoutController extends Controller
 
         return $this->checkoutService->checkout($customerData, $cartItems);
     }
-
 }

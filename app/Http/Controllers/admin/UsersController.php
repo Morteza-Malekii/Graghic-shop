@@ -23,7 +23,6 @@ class UsersController extends Controller
     {
         $users = User::all();
         return view('admin.users.create', compact('users'));
-
     }
 
     public function store(StoreRequest $request)

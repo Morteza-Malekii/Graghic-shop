@@ -30,8 +30,6 @@ class ProductsController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
-
-        // ۱. ایجاد رکورد محصول
         $admin = User::where('email', 'morteza167@gmail.com')->first();
         $product = Product::create([
             'title'       => $data['title'],
@@ -41,36 +39,29 @@ class ProductsController extends Controller
             'owner_id'    => $admin->id,
         ]);
 
-        // ۲. پوشه‌ی مقصد در public (مثلاً public/products/ID)
         $publicFolder = public_path("products/{$product->id}");
         if (! is_dir($publicFolder)) {
             mkdir($publicFolder, 0755, true);
         }
 
-        // ۳. ذخیره‌ی thumbnail و demo در public و ساخت مسیر نسبی
         $paths = [];
         foreach (['thumbnail_url', 'demo_url'] as $field) {
             if ($request->hasFile($field)) {
                 $file = $request->file($field);
                 $filename = "{$field}_" . Str::random(8) . "." . $file->getClientOriginalExtension();
                 $sourcePath = $file->storeAs("products/{$product->id}", $filename, 'public_storage');
-                // مسیر نسبی برای دیتابیس
                 $paths[$field] = "products/{$product->id}/{$filename}";
             }
         }
 
-        // ۴. ذخیره‌ی source در پوشه‌ی private (storage/app/private)
         if ($request->hasFile('source_url')) {
             $file = $request->file('source_url');
             $filename2 = "source_" . Str::random(12) . "." . $file->getClientOriginalExtension();
-            // local_storage در config/filesystems تعریف شده به storage/app/private
             $sourcePath = $file->storeAs("products/{$product->id}", $filename2, 'local_storage');
             $paths['source_url'] = $sourcePath;
         }
 
-        // ۵. به‌روزرسانی مسیرها در دیتابیس
         $product->update($paths);
-
         return back()->with('success', 'محصول با موفقیت ذخیره شد.');
     }
 
@@ -97,15 +88,9 @@ class ProductsController extends Controller
 
     public function destroy(Product $product)
     {
-        // همه چیز را در یک تراکنش انجام می‌دهیم
         DB::transaction(function () use ($product) {
-            // حذف کامل پوشه‌ی محصولات برای فایل‌های عمومی
             Storage::disk('public_storage')->deleteDirectory("products/{$product->id}");
-
-            // حذف پوشه‌ی محصولات برای فایل‌های خصوصی
             Storage::disk('local_storage')->deleteDirectory("products/{$product->id}");
-
-            // حذف رکورد محصول از دیتابیس
             $product->delete();
         });
         return redirect()
@@ -127,7 +112,6 @@ class ProductsController extends Controller
 
         DB::transaction(function () use($data , $product , $request) {
             $product->update($data);
-
             $filefields = [
                 'thumbnail_url'=>'public_storage',
                 'demo_url'=>'public_storage',

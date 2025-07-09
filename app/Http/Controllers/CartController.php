@@ -9,9 +9,6 @@ class CartController extends Controller
 {
     public function __construct(protected CartService $cart) {}
 
-    /**
-     * نمایش سبد خرید و مجموع
-     */
     public function index()
     {
         $items = $this->cart->all();
@@ -19,9 +16,6 @@ class CartController extends Controller
         return view('cart.index', compact('items', 'total'));
     }
 
-    /**
-     * اضافه کردن محصول به سبد
-     */
     public function add(Request $request, Product $product)
     {
         $quantity = (int) $request->input('quantity', 1);
@@ -30,9 +24,6 @@ class CartController extends Controller
                          ->with('success', 'محصول به سبد اضافه شد.');
     }
 
-    /**
-     * حذف محصول از سبد
-     */
     public function remove(Product $product)
     {
         $this->cart->remove($product->id);
@@ -44,6 +35,5 @@ class CartController extends Controller
     {
         $this->cart->clear();
         return redirect()->route('cart.index');
-                    // ->with('success', 'سبد خرید خالی شد .');
     }
 }

@@ -8,7 +8,6 @@ class OrderService
 {
     public function createForUser(User $user, array $items): Order
     {
-        // محاسبه مبلغ کل
         $total = collect($items)
             ->sum(fn($i) => $i['unit_price'] * $i['quantity']);
 
