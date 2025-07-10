@@ -1,61 +1,101 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+راهنمای پروژه «Graphic-Shop»
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+فروشگاه آنلاین فایل‌های گرافیکی بر پایه لاراول.
 
-## About Laravel
+توضیحات
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Graphic-Shop به کاربران امکان می‌دهد فایل‌های گرافیکی باکیفیت را مرور، خرید و دانلود کنند. مدیران می‌توانند از طریق پنل مدیریت امن، محصولات، سفارش‌ها و پرداخت‌ها را کنترل و پیگیری کنند.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+ویژگی‌ها
+	•	سبد خرید و پرداخت: افزودن محصول به سبد، ویرایش تعداد، حذف آیتم و تسویه حساب.
+	•	درگاه پرداخت زرین‌پال: ایجاد فاکتور، ریدایرکت به درگاه، دریافت callback و تایید تراکنش.
+	•	کنترل دسترسی بر پایه نقش: تفکیک کاربران Admin و User با میانی‌افزار (middleware) برای امنیت بیشتر.
+	•	دانلود امن: ذخیرهٔ خصوصی فایل‌ها و استریم دانلود از طریق کنترلر؛ امکان فشرده‌سازی ZIP برای دانلود دسته‌جمعی.
+	•	معماری تمیز: استفاده از روابط Eloquent، ساختار Service Layer، Form Request برای اعتبارسنجی و تزریق وابستگی (DI) برای کد قابل نگهداری.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+پیش‌نیازها
+	•	PHP نسخهٔ 8.0 یا بالاتر
+	•	لاراول 10
+	•	پایگاه‌داده MySQL یا هر دیتابیس سازگار با PDO
+	•	Composer و Node.js / npm
 
-## Learning Laravel
+نصب و راه‌اندازی
+	1.	کلون کردن مخزن
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+git clone https://github.com/username/graphic-shop.git
+cd graphic-shop
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+	2.	نصب وابستگی‌ها
 
-## Laravel Sponsors
+composer install
+npm install
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-### Premium Partners
+	3.	تنظیم محیط
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+cp .env.example .env
+php artisan key:generate
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+	4.	پیکربندی دیتابیس و درگاه پرداخت
+در فایل .env مقادیر زیر را تنظیم کنید:
 
-## Code of Conduct
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=graphic_shop
+DB_USERNAME=root
+DB_PASSWORD=
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+PAYMENT_DRIVER=zarinpal
+ZARINPAL_MODE=sandbox
+ZARINPAL_TERMINAL_ID=your_merchant_id
+ZARINPAL_CALLBACK_URL=http://your-domain.com/payment/callback/{payment}
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+	5.	اجرای مهاجرت‌ها و seederها
 
-## License
+php artisan migrate --seed
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+	6.	لینک سمبولیک storage
+
+php artisan storage:link
+
+
+	7.	کامپایل فایل‌های فرانت‌اند
+
+npm run dev
+
+
+
+نحوهٔ استفاده
+	•	به آدرس / مراجعه و محصولات را مرور کنید.
+	•	محصولات دلخواه را به سبد اضافه و سپس اقدام به پرداخت نمایید.
+	•	پس از پرداخت موفق، لینک‌های دانلود در صفحهٔ موفقیت نمایش داده می‌شوند.
+	•	پنل مدیریت امن در /admin برای مدیریت محصولات، سفارش‌ها و کاربران فعال است.
+
+ایجاد کاربر ادمین
+
+برای ساخت کاربر با نقش Admin در Tinker:
+
+php artisan tinker
+>>> \App\Models\User::create([
+    'name' => 'Admin',
+    'email' => 'admin@example.com',
+    'password' => bcrypt('password'),
+    'role' => 'admin'
+]);
+
+سپس از طریق /admin/login وارد پنل شوید.
+
+مشارکت در پروژه
+	1.	مخزن را fork کنید
+	2.	شاخهٔ جدید بسازید: git checkout -b feature/YourFeature
+	3.	تغییرات را commit و push کنید
+	4.	Pull Request ارسال کنید
+
+مجوز
+
+این پروژه تحت مجوز MIT منتشر شده است.
