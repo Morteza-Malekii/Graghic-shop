@@ -46,7 +46,7 @@
         <div class="top-bar">
             <div class="content-topbar flex-sb-m h-full container">
                 <div class="left-top-bar">
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
+                    کاملترین فروشگاه فایلهای گرافیکی با فرمت فورکا با بهترین قیمت
                 </div>
 
                 <div class="right-top-bar flex-w h-full">
@@ -56,6 +56,9 @@
 
                     <a href="#" class="flex-c-m trans-04 p-lr-25">
                         اکانت من
+                    </a>
+                    <a href="{{ route('admin.products.index') }}" class="flex-c-m trans-04 p-lr-25">
+                        مدیریت سایت
                     </a>
                 </div>
             </div>
