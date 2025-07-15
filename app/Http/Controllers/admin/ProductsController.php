@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\admin\products\StoreRequest;
-use App\Http\Requests\admin\products\UpdateRequest;
+use App\Http\Requests\Admin\products\StoreRequest;
+use App\Http\Requests\Admin\products\UpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
